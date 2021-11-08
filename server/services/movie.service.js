@@ -5,10 +5,6 @@ const _ = require('lodash');
 
 exports.getMoviesFromUrl = async () => {
     var result = await got.get('https://swapi.dev/api/films', { responseType: 'json' });
-    const headerDate = result?.headers && result?.headers?.date ? result?.headers?.date : 'no response date';
-    console.log('Status Code:', result?.statusCode);
-    console.log('Date in Response header:', headerDate);
-    console.log('IP', result?.ip);
     if (result?.body?.count > 0) {
         const movies = result.body.results;
         var ordermovies = _.orderBy(movies, ['release_date'], ['asc']);

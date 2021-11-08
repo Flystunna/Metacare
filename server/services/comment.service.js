@@ -1,5 +1,6 @@
 const db = require("../models");
 const Comment = db.comment;
+const got = require('got');
 const _ = require('lodash');
 
 //Comments
@@ -13,12 +14,16 @@ exports.saveComment = async (body, ip) => {
     if (body?.comment?.length > 500) {
         throw new Error("Comment can not be more than 500 characters");
     }
-    var saveComment = await Comment.create({
-        comment: body?.comment,
-        ip_address: ip ?? "No IP Found",
-        episode_id: body?.episode_id
-    });
-    return saveComment;
+    var validate = await exports.validateMovieExist(episode_id);
+    if(validate){
+        var saveComment = await Comment.create({
+            comment: body?.comment,
+            ip_address: ip ?? "No IP Found",
+            episode_id: body?.episode_id
+        });
+        return saveComment;
+    }
+    else throw new Error("Movie Not Found On Swapi");
 }
 
 exports.getCommentsByMovie = async (episode_id) => {
@@ -36,4 +41,17 @@ exports.getCommentsByMovie = async (episode_id) => {
     });
     if (existingComments?.length > 0) return existingComments;
     else throw new Error("No Comments Found");
+}
+
+
+exports.validateMovieExist = async (episode_id) => {
+    try {
+        var result = await got.get(`https://swapi.dev/api/films/${episode_id}`, { responseType: 'json' });
+        if (result?.body) {
+            return true;
+        }
+        else throw new Error("Movie Not Found On Swapi");
+    } catch (error) {
+
+    }
 }
