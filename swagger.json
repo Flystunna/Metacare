@@ -1,0 +1,209 @@
+{
+  "title": "Node API Wih PostgreSQL DB Documentation",
+  "description": "Swagger API Documentation for ASB",
+  "license": {
+    "name": "MIT",
+    "url": "https://opensource.org/licenses/MIT"
+  },
+  "swagger": "2.0",
+  "version": "1.0.0",
+  "host": "metacare-node-api.herokuapp.com",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "Movie",
+      "description": "Endpoints for Movies"
+    },
+    {
+      "name": "Character",
+      "description": "Endpoints for movie character"
+    },
+    {
+      "name": "Comment",
+      "description": "Endpoints for movie comment"
+    }
+  ],
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/api/movie/getmovies": {
+      "get": {
+        "tags": [
+          "Movie"
+        ],
+        "summary": "Get All Movies",
+        "description": "Get All Movies From Swapi",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Movie List is returned",
+            "schema": {
+              "$ref": "#definitions/Movie"
+            }
+          }
+        }
+      }
+    },
+    "/api/character/getcharacterbymovie": {
+      "post": {
+        "tags": [
+          "Character"
+        ],
+        "summary": "Movie Character Details",
+        "description": "Get Characters By Movie",
+        "parameters": [
+          {
+            "name": "GetCharacterByMovie",
+            "description": "Get Character By Movie",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#definitions/GetCharacterByMovie"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Character Details",
+            "schema": {
+              "$ref": "#definitions/Character"
+            }
+          }
+        }
+      }
+    },
+    "/api/comment/save": {
+      "post": {
+        "tags": [
+          "Comment"
+        ],
+        "summary": "Save Comment Details",
+        "description": "Save Comment For Movie",
+        "parameters": [
+          {
+            "name": "SaveComment",
+            "description": "Save Comment For Movie",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#definitions/SaveComment"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Save Comment Details",
+            "schema": {
+              "$ref": "#definitions/Comment"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Movie": {
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "opening_crawl": {
+          "type": "string"
+        },
+        "comments": {
+          "type": "integer"
+        }
+      }
+    },
+    "SaveComment":{
+      "required": [
+        "episode_id", "comment"
+      ],
+      "properties":{
+        "episode_id": {
+          "type": "integer"
+        },
+        "comment": {
+          "type": "string"
+        }
+      }
+    },
+    "Comment":{
+      "properties":{
+        "id":{
+          "type": "integer"
+        },
+        "comment":{
+          "type": "string"
+        },
+        "episode_id": {
+          "type": "integer"
+        },
+        "ip_address": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        }
+      }
+    },
+    "GetCharacterByMovie": {
+      "required": [
+        "episode_id"
+      ],
+      "properties": {
+        "episode_id": {
+          "type": "integer"
+        },
+        "gender": {
+          "type": "string"
+        },
+        "sort": {
+          "type": "string"
+        },
+        "order":{
+          "type": "string"
+        }
+      }
+    },
+    "Character": {
+      "properties": {
+        "metadata": {
+          "type": "object",
+          "properties":{
+            "totalCharacters": {
+              "type": "integer"
+            },
+            "totalHeightInCM": {
+              "type": "integer"
+            },
+            "totalHeightInFeets": {
+              "type": "string"
+            }
+          }
+        },
+        "body": {
+          "type": "object"
+        }
+      }
+    }
+  }
+}
