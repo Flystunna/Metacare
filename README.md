@@ -6,6 +6,8 @@ Live Documentation Page: https://metacare-node-api.herokuapp.com/swagger
 
 dockerfile included
 
+rate limiting included in apu
+
 api/comment/save: Endpoint to save Comment for Movie
 
 Sample Payload:
