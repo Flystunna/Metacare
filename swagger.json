@@ -7,7 +7,7 @@
   },
   "swagger": "2.0",
   "version": "1.0.0",
-  "host": "metacare-node-api.herokuapp.com",
+  "host": "metacare-node-api.herokuapp.com",  
   "basePath": "/",
   "tags": [
     {
@@ -38,7 +38,7 @@
         "tags": [
           "Movie"
         ],
-        "summary": "Get All Movies",
+        "summary": "Get All Movies from Swapi",
         "description": "Get All Movies From Swapi",
         "produces": [
           "application/json"
@@ -59,11 +59,11 @@
           "Character"
         ],
         "summary": "Movie Character Details",
-        "description": "Get Characters By Movie",
+        "description": "Get Characters By Movie from Swapi with filter, sort(column) and order",
         "parameters": [
           {
             "name": "GetCharacterByMovie",
-            "description": "Get Character By Movie",
+            "description": "Get Characters By Movie",
             "in": "body",
             "required": true,
             "schema": {
@@ -114,6 +114,38 @@
           }
         }
       }
+    },
+    "/api/comment/getcommentbymovie/{episode_id}": {
+      "get": {
+        "tags": [
+          "Comment"
+        ],
+        "summary": "Get Comments By Movie",
+        "description": "Get Comments By Movie Id",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "episode_id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "The Episode Id"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Comment Details",
+            "schema": {
+              "$ref": "#definitions/Comment"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -130,11 +162,12 @@
         }
       }
     },
-    "SaveComment":{
+    "SaveComment": {
       "required": [
-        "episode_id", "comment"
+        "episode_id",
+        "comment"
       ],
-      "properties":{
+      "properties": {
         "episode_id": {
           "type": "integer"
         },
@@ -143,12 +176,12 @@
         }
       }
     },
-    "Comment":{
-      "properties":{
-        "id":{
+    "Comment": {
+      "properties": {
+        "id": {
           "type": "integer"
         },
-        "comment":{
+        "comment": {
           "type": "string"
         },
         "episode_id": {
@@ -179,7 +212,7 @@
         "sort": {
           "type": "string"
         },
-        "order":{
+        "order": {
           "type": "string"
         }
       }
@@ -188,7 +221,7 @@
       "properties": {
         "metadata": {
           "type": "object",
-          "properties":{
+          "properties": {
             "totalCharacters": {
               "type": "integer"
             },
